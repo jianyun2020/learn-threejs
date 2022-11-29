@@ -18,6 +18,11 @@ const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
 const cube = new THREE.Mesh(boxGeometry, material)
 // 添加物体到场景
 scene.add(cube)
+// 移动物体
+// cube.position.set(5, 0, 0)
+cube.position.x = 5
+
+
 
 // 渲染器
 const renderer = new THREE.WebGLRenderer()
@@ -34,6 +39,10 @@ const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
 
 function render() {
+  // 移动物体
+  cube.position.x += 0.01
+  if (cube.position.x > 5) cube.position.x = 0
+  
   renderer.render(scene, camera)
 
   requestAnimationFrame(render)
