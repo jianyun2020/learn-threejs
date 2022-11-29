@@ -40,11 +40,18 @@ const controls = new OrbitControls(camera, renderer.domElement)
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
 
-function render(time) {
+// Clock
+const clock = new THREE.Clock()
+
+function render() {
   // 移动物体
   // cube.position.x += 0.01
   // if (cube.position.x > 5) cube.position.x = 0
-  const t = time / 1000 % 5
+  // const t = time / 1000 % 5
+  // cube.position.x = t * 1
+  // 使用Clock记录时间
+  const time = clock.getElapsedTime()
+  const t = time % 5
   cube.position.x = t * 1
 
   // 缩放物体
