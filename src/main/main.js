@@ -74,11 +74,19 @@ const animate1 = gsap.to(cube.position, {
 
 // 通过事件控制
 window.addEventListener('dblclick', function () {
-  console.log("animate1: ", animate1)
-  if (animate1.isActive()) {
-    animate1.pause()
+  // console.log("animate1: ", animate1)
+  // if (animate1.isActive()) {
+  //   animate1.pause()
+  // } else {
+  //   animate1.resume()
+  // }
+
+  // 双击全屏控制
+  const fullScreenElement = document.fullscreenElement
+  if (fullScreenElement) {
+    document.exitFullscreen()
   } else {
-    animate1.resume()
+    renderer.domElement.requestFullscreen()
   }
 })
 
