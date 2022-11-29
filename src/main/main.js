@@ -41,6 +41,8 @@ document.body.appendChild(renderer.domElement)
 
 // 创建轨道控制器
 const controls = new OrbitControls(camera, renderer.domElement)
+// 启用阻尼（惯性）,需要在动画中调用 update()
+controls.enableDamping = true
 
 // 添加坐标轴辅助器
 const axesHelper = new THREE.AxesHelper(5)
@@ -83,6 +85,9 @@ window.addEventListener('dblclick', function () {
 gsap.to(cube.rotation, { x: 2 * Math.PI, duration: 3 })
 
 function render() {
+  // 调用阻尼update()
+  controls.update()
+
   // 移动物体
   // cube.position.x += 0.01
   // if (cube.position.x > 5) cube.position.x = 0
