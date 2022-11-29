@@ -1,11 +1,17 @@
-import * as THREE from 'three'
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
+import * as THREE from "three"
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
+import gsap from "gsap"
 
 // 创建场景
 const scene = new THREE.Scene()
 
 // 创建相机
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 1000)
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  1,
+  1000
+)
 
 // 设置相机位置
 camera.position.set(0, 0, 10)
@@ -20,7 +26,7 @@ const cube = new THREE.Mesh(boxGeometry, material)
 scene.add(cube)
 // 移动物体
 // cube.position.set(5, 0, 0)
-cube.position.x = 5
+// cube.position.x = 5
 // 缩放物体
 // cube.scale.set(3, 2, 1)
 // 旋转物体
@@ -41,7 +47,40 @@ const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
 
 // Clock
-const clock = new THREE.Clock()
+// const clock = new THREE.Clock()
+
+// gsap 使用
+const animate1 = gsap.to(cube.position, {
+  x: 5,
+  // 设置延迟时间
+  delay: 2,
+  // 设置往返
+  yoyo: true,
+  // 重复多少次 -1 表示无限循环
+  repeat: -1,
+  // 开始回调
+  onStart: () => {
+    console.log("开始")
+  },
+  // 结束回调
+  onComplete: () => {
+    console.log("结束")
+  },
+  ease: "power1.inOut",
+  duration: 3,
+})
+
+// 通过事件控制
+window.addEventListener('dblclick', function () {
+  console.log("animate1: ", animate1)
+  if (animate1.isActive()) {
+    animate1.pause()
+  } else {
+    animate1.resume()
+  }
+})
+
+gsap.to(cube.rotation, { x: 2 * Math.PI, duration: 3 })
 
 function render() {
   // 移动物体
@@ -50,17 +89,17 @@ function render() {
   // const t = time / 1000 % 5
   // cube.position.x = t * 1
   // 使用Clock记录时间
-  const time = clock.getElapsedTime()
-  const t = time % 5
-  cube.position.x = t * 1
+  // const time = clock.getElapsedTime()
+  // const t = time % 5
+  // cube.position.x = t * 1
 
   // 缩放物体
-  cube.scale.y += 0.01
-  if (cube.scale.y > 3) cube.scale.y = 0
+  // cube.scale.y += 0.01
+  // if (cube.scale.y > 3) cube.scale.y = 0
 
-  // 旋转物体
-  cube.rotation.x += 1
-  
+  // // 旋转物体
+  // cube.rotation.x += 1
+
   renderer.render(scene, camera)
 
   requestAnimationFrame(render)
