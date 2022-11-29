@@ -21,8 +21,10 @@ scene.add(cube)
 // 移动物体
 // cube.position.set(5, 0, 0)
 cube.position.x = 5
-
-
+// 缩放物体
+// cube.scale.set(3, 2, 1)
+// 旋转物体
+// cube.rotation.set(Math.PI / 4, 0, 0)
 
 // 渲染器
 const renderer = new THREE.WebGLRenderer()
@@ -42,6 +44,13 @@ function render() {
   // 移动物体
   cube.position.x += 0.01
   if (cube.position.x > 5) cube.position.x = 0
+
+  // 缩放物体
+  cube.scale.y += 0.01
+  if (cube.scale.y > 3) cube.scale.y = 0
+
+  // 旋转物体
+  cube.rotation.x += 1
   
   renderer.render(scene, camera)
 
