@@ -40,10 +40,12 @@ const controls = new OrbitControls(camera, renderer.domElement)
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
 
-function render() {
+function render(time) {
   // 移动物体
-  cube.position.x += 0.01
-  if (cube.position.x > 5) cube.position.x = 0
+  // cube.position.x += 0.01
+  // if (cube.position.x > 5) cube.position.x = 0
+  const t = time / 1000 % 5
+  cube.position.x = t * 1
 
   // 缩放物体
   cube.scale.y += 0.01
