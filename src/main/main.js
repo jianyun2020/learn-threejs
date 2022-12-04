@@ -1,6 +1,7 @@
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 import gsap from "gsap"
+import * as dat from "dat.gui"
 
 // 创建场景
 const scene = new THREE.Scene()
@@ -32,6 +33,36 @@ scene.add(cube)
 // 旋转物体
 // cube.rotation.set(Math.PI / 4, 0, 0)
 
+// dat.gui
+const gui = new dat.GUI()
+// 设置物体位置
+gui.add(cube.position, "y").min(0).max(5).step(0.01).name("设置y轴").onChange((value) => {
+  console.log("value改变：", value)
+}).onFinishChange((value) => {
+  console.log("value完全改变：", value)
+})
+// 设置物体颜色
+const params = {
+  color: "#ff0000",
+  fn: () => {
+    console.log(animate1)
+    animate1.pause()
+  }
+}
+gui.addColor(params, "color").onChange((value) => {
+  console.log("物体颜色被改变：", value)
+  cube.material.color.set(value)
+})
+// 添加文件夹
+const folder = gui.addFolder("其他")
+// 自动展开
+folder.closed = false
+console.log(folder)
+// 设置物体显隐
+folder.add(cube, "visible")
+// 触发事件
+folder.add(params, 'fn')
+
 // 渲染器
 const renderer = new THREE.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
@@ -55,7 +86,7 @@ scene.add(axesHelper)
 const animate1 = gsap.to(cube.position, {
   x: 5,
   // 设置延迟时间
-  delay: 2,
+  delay: 1,
   // 设置往返
   yoyo: true,
   // 重复多少次 -1 表示无限循环
