@@ -19,49 +19,64 @@ camera.position.set(0, 0, 10)
 // 添加相机到场景
 scene.add(camera)
 
-// 创建物体
-const boxGeometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-const cube = new THREE.Mesh(boxGeometry, material)
-// 添加物体到场景
-scene.add(cube)
-// 移动物体
-// cube.position.set(5, 0, 0)
-// cube.position.x = 5
-// 缩放物体
-// cube.scale.set(3, 2, 1)
-// 旋转物体
-// cube.rotation.set(Math.PI / 4, 0, 0)
+// // 创建物体
+// const boxGeometry = new THREE.BoxGeometry(1, 1, 1)
+// const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+// const cube = new THREE.Mesh(boxGeometry, material)
+// // 添加物体到场景
+// scene.add(cube)
+// // 移动物体
+// // cube.position.set(5, 0, 0)
+// // cube.position.x = 5
+// // 缩放物体
+// // cube.scale.set(3, 2, 1)
+// // 旋转物体
+// // cube.rotation.set(Math.PI / 4, 0, 0)
 
-// dat.gui
-const gui = new dat.GUI()
-// 设置物体位置
-gui.add(cube.position, "y").min(0).max(5).step(0.01).name("设置y轴").onChange((value) => {
-  console.log("value改变：", value)
-}).onFinishChange((value) => {
-  console.log("value完全改变：", value)
-})
-// 设置物体颜色
-const params = {
-  color: "#ff0000",
-  fn: () => {
-    console.log(animate1)
-    animate1.pause()
-  }
-}
-gui.addColor(params, "color").onChange((value) => {
-  console.log("物体颜色被改变：", value)
-  cube.material.color.set(value)
-})
-// 添加文件夹
-const folder = gui.addFolder("其他")
-// 自动展开
-folder.closed = false
-console.log(folder)
-// 设置物体显隐
-folder.add(cube, "visible")
-// 触发事件
-folder.add(params, 'fn')
+// // dat.gui
+// const gui = new dat.GUI()
+// // 设置物体位置
+// gui.add(cube.position, "y").min(0).max(5).step(0.01).name("设置y轴").onChange((value) => {
+//   console.log("value改变：", value)
+// }).onFinishChange((value) => {
+//   console.log("value完全改变：", value)
+// })
+// // 设置物体颜色
+// const params = {
+//   color: "#ff0000",
+//   fn: () => {
+//     console.log(animate1)
+//     animate1.pause()
+//   }
+// }
+// gui.addColor(params, "color").onChange((value) => {
+//   console.log("物体颜色被改变：", value)
+//   cube.material.color.set(value)
+// })
+// // 添加文件夹
+// const folder = gui.addFolder("其他")
+// // 自动展开
+// folder.closed = false
+// console.log(folder)
+// // 设置物体显隐
+// folder.add(cube, "visible")
+// // 触发事件
+// folder.add(params, 'fn')
+
+// BufferGeometry
+const geometry = new THREE.BufferGeometry()
+const vertices = new Float32Array([
+  -1, -1, 1,
+  1, -1, 1,
+  1, 1, 1,
+  1, 1, 1,
+  -1, 1, 1,
+  -1, -1, 1,
+])
+geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3))
+const material = new THREE.MeshBasicMaterial({color: 0xff0000})
+const cube = new THREE.Mesh(geometry, material)
+scene.add(cube)
 
 // 渲染器
 const renderer = new THREE.WebGLRenderer()
@@ -83,25 +98,25 @@ scene.add(axesHelper)
 // const clock = new THREE.Clock()
 
 // gsap 使用
-const animate1 = gsap.to(cube.position, {
-  x: 5,
-  // 设置延迟时间
-  delay: 1,
-  // 设置往返
-  yoyo: true,
-  // 重复多少次 -1 表示无限循环
-  repeat: -1,
-  // 开始回调
-  onStart: () => {
-    console.log("开始")
-  },
-  // 结束回调
-  onComplete: () => {
-    console.log("结束")
-  },
-  ease: "power1.inOut",
-  duration: 3,
-})
+// const animate1 = gsap.to(cube.position, {
+//   x: 5,
+//   // 设置延迟时间
+//   delay: 1,
+//   // 设置往返
+//   yoyo: true,
+//   // 重复多少次 -1 表示无限循环
+//   repeat: -1,
+//   // 开始回调
+//   onStart: () => {
+//     console.log("开始")
+//   },
+//   // 结束回调
+//   onComplete: () => {
+//     console.log("结束")
+//   },
+//   ease: "power1.inOut",
+//   duration: 3,
+// })
 
 // 通过事件控制
 window.addEventListener('dblclick', function () {
@@ -121,7 +136,7 @@ window.addEventListener('dblclick', function () {
   }
 })
 
-gsap.to(cube.rotation, { x: 2 * Math.PI, duration: 3 })
+// gsap.to(cube.rotation, { x: 2 * Math.PI, duration: 3 })
 
 function render() {
   // 调用阻尼update()
